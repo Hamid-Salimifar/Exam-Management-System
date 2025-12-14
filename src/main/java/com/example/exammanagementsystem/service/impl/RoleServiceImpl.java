@@ -7,6 +7,8 @@ import com.example.exammanagementsystem.service.RoleService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {
     private final RoleRepository roleRepository;
@@ -16,7 +18,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
     }
 
     @Override
-    public Role findByName(RoleName name) {
+    public Optional<Role> findByName(RoleName name) {
        return roleRepository.findByName(name);
     }
 }
