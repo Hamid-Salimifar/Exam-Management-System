@@ -22,6 +22,5 @@ public class Role {
     @Column(unique = true,nullable = false)
     private RoleName name;
 
-    @ManyToMany
-    private Set<User> user;
+
 }
