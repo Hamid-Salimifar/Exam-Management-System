@@ -4,7 +4,7 @@ spring:
     name: Exam-Management-System
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/hospital
+    url: jdbc:postgresql://localhost:5432/exam_management_system
     username: postgres
     password: 138175
     driver-class-name: org.postgresql.Driver
