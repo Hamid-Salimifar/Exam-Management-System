@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form id="loginForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <br><br>
+    <input type="password" id="password" placeholder="Password" required />
+    <br><br>
+    <button type="submit">Login</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const response = await fetch("http://localhost:8080/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            })
+        });
+
+        const text = await response.text();
+        document.getElementById("result").innerText = text;
+
+        if (response.ok) {
+            const data = JSON.parse(text);
+            localStorage.setItem("token", data.token);
+        }
+    });
+</script>
+
+</body>
+</html>
