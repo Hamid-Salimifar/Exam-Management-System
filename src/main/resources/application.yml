@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/exam_management_system
     username: postgres
-    password: 138175
+    password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -17,3 +17,6 @@ spring:
         format_sql: true
 server:
   port: 8080
+
+jwt:
+  secret: ee0eff093432afb8419daa63728b6d6925a1f3e849cfbf3503a1a1e03ebf23b0
