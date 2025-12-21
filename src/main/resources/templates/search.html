@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>search</title>
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+</head>
+<body>
+
+<form th:action="@{/manager/search}" method="get">
+    <input type="text" name="username" placeholder="Username" />
+    <input type="text" name="firstname" placeholder="Firstname" />
+    <input type="text" name="lastname" placeholder="Lastname" />
+    <input type="text" name="email" placeholder="Email" />
+
+    <select name="roleName">
+        <option value="">All roles</option>
+        <option value="ROLE_MANAGER">Manager</option>
+        <option value="ROLE_TEACHER">Teacher</option>
+        <option value="ROLE_STUDENT">Student</option>
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<a th:href="@{/home}">Back to Dashboard</a>
+</body>
+</html>

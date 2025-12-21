@@ -1,0 +1,87 @@
+/* Page base */
+body {
+    background-color: #f4f6f8;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 40px;
+}
+
+/* Main title */
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Section titles */
+h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+/* Course info */
+p {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+/* Horizontal line */
+hr {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Table header */
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Table row hover */
+tbody tr:hover {
+    background-color: #f1f5ff;
+}
+
+/* Status column */
+td:last-child {
+    font-weight: bold;
+}
+
+/* Back button */
+a button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    background-color: #6c757d;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+a button:hover {
+    background-color: #5a6268;
+}
+
+/* Remove underline from link */
+a {
+    text-decoration: none;
+}

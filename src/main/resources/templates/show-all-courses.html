@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>all courses</title>
+    <link rel="stylesheet" th:href="@{/css/show-all-courses.css}">
+</head>
+<body>
+
+<h2>All Courses</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+
+        <th>ID</th>
+
+        <th>Code</th>
+
+        <th>Start Date</th>
+
+        <th>End Date</th>
+
+        <th>Teacher</th>
+
+        <th>Students Count</th>
+
+        <th>Actions</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="course : ${allCourse}">
+        <td th:text="${course.id}"></td>
+
+        <td th:text="${course.uniqueCode}"></td>
+
+        <td th:text="${course.startDate}"></td>
+
+        <td th:text="${course.endDate}"></td>
+
+        <td th:text="${course.teacher.firstname + ' ' + course.teacher.lastname}"></td>
+
+        <td th:text="${#lists.size(course.student)}"></td>
+
+        <td>
+
+            <a th:href="@{/manager/courses/edit/{id}(id=${course.id})}">
+                <button type="button">Details / Edit</button>
+            </a>
+
+            <a th:href="@{/manager/courses/participants/{id}(id=${course.id})}">
+                <button type="button">Participants</button>
+            </a>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<a href="/manager/home">
+    <button type="button">Back</button>
+</a>
+
+
+<a th:href="@{/home}">Back to Dashboard</a>
+
+
+
+</body>
+</html>

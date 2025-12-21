@@ -1,0 +1,126 @@
+/* Page base */
+body {
+    background-color: #f4f6f8;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 40px;
+}
+
+/* Page title */
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Main form (edit course) */
+form {
+    background-color: #ffffff;
+    max-width: 650px;
+    margin: 0 auto 25px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Inputs & select */
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+}
+
+/* Focus effect */
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Students checkbox list */
+form div {
+    margin-left: 10px;
+    margin-bottom: 6px;
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Primary button */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Delete course form */
+form[action*="/delete"] button {
+    background-color: #dc3545;
+}
+
+form[action*="/delete"] button:hover {
+    background-color: #b02a37;
+}
+
+/* Back buttons & links */
+a {
+    display: inline-block;
+    margin-right: 15px;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+/* Back button inside link */
+a button {
+    width: auto;
+    padding: 10px 16px;
+    background-color: #6c757d;
+}
+
+a button:hover {
+    background-color: #5a6268;
+}
+
+/* Dashboard link */
+a[href="/home"] {
+    font-size: 14px;
+    color: #007bff;
+}
+
+a[href="/home"]:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    body {
+        padding: 20px;
+    }
+
+    form {
+        padding: 20px;
+    }
+}

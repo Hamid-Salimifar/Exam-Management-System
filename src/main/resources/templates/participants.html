@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>participant</title>
+    <link rel="stylesheet" th:href="@{/css/participants.css}">
+</head>
+<body>
+
+<h2>Course Participants</h2>
+
+
+<p>
+    <strong>Course Code:</strong>
+    <span th:text="${course.uniqueCode}"></span>
+</p>
+
+<p>
+    <strong>Start Date:</strong>
+    <span th:text="${course.startDate}"></span>
+</p>
+
+<p>
+    <strong>End Date:</strong>
+    <span th:text="${course.endDate}"></span>
+</p>
+
+<hr>
+
+
+<h3>Teacher</h3>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td th:text="${course.teacher.id}"></td>
+        <td th:text="${course.teacher.username}"></td>
+        <td th:text="${course.teacher.firstname + ' ' + course.teacher.lastname}"></td>
+        <td th:text="${course.teacher.email}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<hr>
+
+
+<h3>Students</h3>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="student : ${course.student}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.username}"></td>
+        <td th:text="${student.firstname + ' ' + student.lastname}"></td>
+        <td th:text="${student.email}"></td>
+        <td th:text="${student.registerStatus}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+
+<a th:href="@{/manager/courses}">
+    <button type="button">Back to Courses</button>
+</a>
+
+</body>
+</html>

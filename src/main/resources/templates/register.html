@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>registration</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+</head>
+<body>
+
+<h2>User Registration</h2>
+
+<div th:if="${message}">
+    <p th:text="${message}" style="color: green;"></p>
+</div>
+
+<form th:action="@{/register}" th:object="${registerDto}" method="post">
+    <input type="text" th:field="*{username}" placeholder="Username" required/><br><br>
+    <input type="text" th:field="*{firstname}" placeholder="Firstname" required/><br><br>
+    <input type="text" th:field="*{lastname}" placeholder="Lastname" required/><br><br>
+    <input type="email" th:field="*{email}" placeholder="Email" required/><br><br>
+    <input type="password" th:field="*{password}" placeholder="Password" required/><br><br>
+
+    <label>Role</label>
+    <select th:field="*{role}">
+        <option th:each="d : ${RoleName}"
+                th:value="${d}"
+                th:text="${d.name().replace('ROLE_', '')}">
+        </option>
+    </select><br><br>
+
+    <button type="submit">Register</button>
+</form>
+
+
+</body>
+</html>

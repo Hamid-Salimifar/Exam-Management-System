@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/edit-user.css}">
+</head>
+<body>
+
+<h2>Edit User</h2>
+
+<form th:action="@{/manager/user/edit}" method="post" th:object="${user}">
+
+
+    <input type="hidden" th:field="*{id}" />
+
+    <p>
+        <label>Username:</label>
+        <input type="text" th:field="*{username}" readonly />
+    </p>
+
+    <p>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" />
+    </p>
+
+    <p>
+        <label>First name:</label>
+        <input type="text" th:field="*{firstname}" />
+    </p>
+
+    <p>
+        <label>Last name:</label>
+        <input type="text" th:field="*{lastname}" />
+    </p>
+
+    <p>
+        <label>Register Status:</label>
+        <select th:field="*{registerStatus}">
+            <option th:each="status : ${T(com.example.exammanagementsystem.model.RegisterStatus).values()}"
+                    th:value="${status}"
+                    th:text="${status}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        <label>Roles:</label><br>
+
+    <div th:each="role : ${allRoles}">
+        <input type="checkbox"
+               name="roleIds"
+               th:value="${role.id}"
+               th:checked="${user.roles.contains(role)}" />
+        <span th:text="${role.name}"></span>
+    </div>
+
+    </p>
+
+
+
+
+    <br>
+    <button type="submit">Update User</button>
+
+</form>
+
+<br>
+<a th:href="@{/manager/all-user}">Back to list</a>
+<a th:href="@{/home}">Back to Dashboard</a>
+
+</body>
+</html>

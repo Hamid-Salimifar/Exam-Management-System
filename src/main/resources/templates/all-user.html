@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All User</title>
+    <link rel="stylesheet" th:href="@{/css/all-user.css}">
+</head>
+<body>
+
+
+<h2>All Users</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Role</th>
+        <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${allUser}">
+        <td th:text="${user.id()}"></td>
+        <td th:text="${user.id()}"></td>
+        <td th:text="${user.username()}"></td>
+        <td th:text="${user.firstname()}"></td>
+        <td th:text="${user.lastname()}"></td>
+        <td th:text="${user.email()}"></td>
+        <td th:text="${user.registerStatus()}"></td>
+
+        <td>
+            <a th:href="@{/manager/user/edit/{id}(id=${user.id()})}">
+                Edit
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/home}">Back to Dashboard</a>
+</body>
+</html>
