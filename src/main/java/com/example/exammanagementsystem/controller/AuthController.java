@@ -1,66 +1,77 @@
 package com.example.exammanagementsystem.controller;
 
-import com.example.exammanagementsystem.dto.login.LoginRequestDto;
-import com.example.exammanagementsystem.dto.login.LoginResponseDto;
-import com.example.exammanagementsystem.dto.register.RegisterRequestDto;
-import com.example.exammanagementsystem.dto.register.RegisterResponseDto;
-import com.example.exammanagementsystem.model.RegisterStatus;
-import com.example.exammanagementsystem.model.RoleName;
-import com.example.exammanagementsystem.model.User;
-import com.example.exammanagementsystem.service.UserService;
-import com.example.exammanagementsystem.util.JwtUtil;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import com.example.exammanagementsystem.dto.register.RegisterDto;
+import com.example.exammanagementsystem.model.RoleName;
+import com.example.exammanagementsystem.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+
+@Controller
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
     private final UserService userService;
-    private final JwtUtil jwtUtil;
+
+
+    @GetMapping("/register")
+    public String goToRegisterPage(Model model,@RequestParam(required = false) String message){
+        model.addAttribute("registerDto", new RegisterDto("", "", "", "","", RoleName.ROLE_STUDENT));
+        model.addAttribute("RoleName",RoleName.values());
+        if (message != null) {
+            model.addAttribute("message", message);
+        }
+        return "register";
+    }
+
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto requestDto){
-        if(requestDto.role() == RoleName.ROLE_MANAGER){
-            return ResponseEntity.badRequest().body(new RegisterResponseDto("you can not register as manager"));
-        }
-        if(userService.findByUsername(requestDto.username()).isPresent()){
-            return ResponseEntity.badRequest().body(new RegisterResponseDto("username already exist!"));
-        }
-        RegisterResponseDto registerResponseDto = userService.registerUser(requestDto);
+    public String registerUser(@ModelAttribute RegisterDto registerDto, Model model){
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(registerResponseDto);
+        if(registerDto.role() == RoleName.ROLE_MANAGER){
+            String message = URLEncoder.encode("You cannot register as manager", StandardCharsets.UTF_8);
+            return "redirect:/register?message="+message;
+        }
 
+        if(userService.findByUsername(registerDto.username()).isPresent()){
+            String message = URLEncoder.encode("Username already exists!", StandardCharsets.UTF_8);
+            return "redirect:/register?message="+message;
+        }
+
+        userService.registerUser(registerDto);
+
+        String message = URLEncoder.encode("Successfully registered! Wait for approval.", StandardCharsets.UTF_8);
+        return "redirect:/register?message="+message;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto request){
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.username(),
-                        request.password()
-                )
-        );
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(required = false) String error,
+                            @RequestParam(required = false) String logout,
+                            Model model ){
 
-        User user=userService
-                .findByUsername(request.username())
-                .orElseThrow(()->new IllegalStateException("user Not found"));
-
-        if(user.getRegisterStatus() != RegisterStatus.APPROVED){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("your account is " +user.getRegisterStatus().toString());
+        if(error != null){
+            model.addAttribute("errorMessage","Invalid credential or your account  is not approved yet");
         }
-
-        String token=jwtUtil.generateToken(user.getUsername());
-        return ResponseEntity.ok(new LoginResponseDto(token));
-
+        if (logout != null) {
+            model.addAttribute("logoutMessage",
+                    "You have been logged out successfully.");
+        }
+        return "login";
     }
+
+
+
+
+
 }
