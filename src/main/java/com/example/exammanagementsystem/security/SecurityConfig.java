@@ -1,7 +1,6 @@
 package com.example.exammanagementsystem.security;
 
-import com.example.exammanagementsystem.util.JwtAuthFilter;
-import com.example.exammanagementsystem.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,47 +22,44 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private CustomUserDetailsService customUserDetailsService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    @Autowired
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    @Bean
-    public JwtAuthFilter jwtAuthFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-        return new JwtAuthFilter(jwtUtil, userDetailsService);
-    }
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider(){
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(customUserDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//
+//        return authProvider;
+//    }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
-                                                         PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-
-        provider.setPasswordEncoder(passwordEncoder);
-        return provider;
-    }
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter, AuthenticationProvider authProvider) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register/**", "/login").permitAll()
-                        .requestMatchers("/", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-
+                        .requestMatchers("/register/**", "/login","/css/**").permitAll()
                         .requestMatchers("/manager/**").hasRole("MANAGER")
-                        .anyRequest().authenticated()
-                )
-                .logout(logout->logout.disable())
-                .authenticationProvider(authProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .anyRequest().authenticated())
+                .formLogin(form->form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home",true)
+                        .failureUrl("/login?error")
+                        .permitAll())
+
+                .logout(logout->logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout").permitAll())
                 .build();
 
     }
