@@ -1,28 +1,32 @@
 package com.example.exammanagementsystem.service.impl;
 
-import com.example.exammanagementsystem.dto.register.RegisterRequestDto;
-import com.example.exammanagementsystem.dto.register.RegisterResponseDto;
+import com.example.exammanagementsystem.dto.register.RegisterDto;
 import com.example.exammanagementsystem.dto.user.UserResponseDto;
 import com.example.exammanagementsystem.model.RegisterStatus;
 import com.example.exammanagementsystem.model.Role;
+import com.example.exammanagementsystem.model.RoleName;
 import com.example.exammanagementsystem.model.User;
 import com.example.exammanagementsystem.repository.RoleRepository;
 import com.example.exammanagementsystem.repository.UserRepository;
-import com.example.exammanagementsystem.service.RoleService;
+import com.example.exammanagementsystem.search.UserSpecification;
 import com.example.exammanagementsystem.service.UserService;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+
+
     private final RoleRepository roleRepository;
     public UserServiceImpl(UserRepository userRepository,PasswordEncoder passwordEncoder,RoleRepository roleRepository) {
         super(userRepository);
@@ -37,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public RegisterResponseDto registerUser(RegisterRequestDto requestDto) {
+    public String registerUser(RegisterDto requestDto) {
         User user = User.builder()
                 .username(requestDto.username())
                 .firstname(requestDto.firstname())
@@ -52,7 +56,43 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.getRoles().add(role);
         saveOrUpdate(user);
 
-        return new RegisterResponseDto("successfully registered");
+        return "successfully registered";
+    }
+
+    @Override
+    public List<User> findByRole(RoleName roleName) {
+        return userRepository.findByRoles_Name(roleName);
+    }
+
+    public List<User> searchUsers(String username, String firstname, String lastname, String email, RoleName roleName) {
+        Specification<User> spec = Specification.where(UserSpecification.hasUsername(username))
+                .and(UserSpecification.hasFirstname(firstname))
+                .and(UserSpecification.hasLastname(lastname))
+                .and(UserSpecification.hasEmail(email))
+                .and(UserSpecification.hasRole(roleName));
+
+        return userRepository.findAll(spec);
+    }
+
+    @Override
+    public User editUser(User user, List<Long> roleIds) {
+        User existing = userRepository.findById(user.getId()).orElseThrow();
+
+        existing.setEmail(user.getEmail());
+        existing.setFirstname(user.getFirstname());
+        existing.setLastname(user.getLastname());
+        existing.setRegisterStatus(user.getRegisterStatus());
+
+        existing.getRoles().clear();
+
+        if (roleIds != null) {
+            for (Long roleId : roleIds) {
+                Role role = roleRepository.findById(roleId).orElseThrow();
+                existing.getRoles().add(role);
+            }
+        }
+
+        return userRepository.save(existing);
     }
 
     @Override
@@ -69,6 +109,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     public UserResponseDto entityToDto(User user){
         return new UserResponseDto(
+                user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),
