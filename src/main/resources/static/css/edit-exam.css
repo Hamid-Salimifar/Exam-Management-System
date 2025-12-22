@@ -1,0 +1,87 @@
+/* General page styling */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page container */
+body > * {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+/* Paragraph spacing */
+form p {
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+}
+
+/* Inputs and textarea */
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+textarea {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+/* Buttons */
+button {
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+/* Update button */
+form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+/* Delete button (second form) */
+form + hr + form button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+/* Hover effect */
+button:hover {
+    opacity: 0.9;
+}
+
+/* Horizontal rules */
+hr {
+    margin: 20px 0;
+}
+
+/* Back link */
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}

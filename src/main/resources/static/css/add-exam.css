@@ -1,0 +1,71 @@
+/* General page styling */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page container */
+body > * {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form container */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #cccccc;
+}
+
+/* Form spacing */
+form p {
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+}
+
+/* Inputs and textarea */
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+textarea {
+    width: 100%;
+    padding: 6px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+button {
+    padding: 8px 14px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Button hover */
+button:hover {
+    opacity: 0.9;
+}
+
+/* Back link */
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
