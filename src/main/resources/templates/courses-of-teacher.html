@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>course of teacher</title>
+    <link rel="stylesheet" th:href="@{/css/course-of-teacher.css}">
+</head>
+<body>
+
+<h2>All Courses you Teach</h2>
+
+
+
+
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+
+        <th>ID</th>
+
+        <th>Code</th>
+
+        <th>Start Date</th>
+
+        <th>End Date</th>
+
+        <th>Teacher</th>
+
+        <th>Students Count</th>
+
+        <th>Actions</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="course : ${coursesOfTeacher}">
+        <td th:text="${course.id}"></td>
+
+        <td th:text="${course.uniqueCode}"></td>
+
+        <td th:text="${course.startDate}"></td>
+
+        <td th:text="${course.endDate}"></td>
+
+        <td th:text="${course.teacher.firstname + ' ' + course.teacher.lastname}"></td>
+
+        <td th:text="${#lists.size(course.student)}"></td>
+
+        <td>
+
+            <a th:href="@{/teacher/course/exams/{id}(id=${course.id})}">
+                <button type="button">See All Exams</button>
+            </a>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<a th:href="@{/home}">Back to Dashboard</a>
+</body>
+</html>
