@@ -31,6 +31,11 @@ public class CourseServiceImpl extends BaseServiceImpl<Course> implements Course
     }
 
     @Override
+    public List<Course> findByTeacher(User teacher) {
+        return courseRepository.findByTeacher(teacher);
+    }
+
+    @Override
     public Course updateCourse(Long courseId, String uniqueCode, LocalDate startDate, LocalDate endDate, Long teacherId, List<Long> studentIds) {
 
         Course course = courseRepository.findById(courseId)
