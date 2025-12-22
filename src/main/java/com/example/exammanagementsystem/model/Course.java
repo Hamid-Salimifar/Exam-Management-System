@@ -33,4 +33,8 @@ public class Course {
     joinColumns = @JoinColumn(name = "course_id"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
     private Set<User> student;
+
+
+//    @OneToMany(mappedBy = "course")
+//    private Set<Exam> exams;
 }
