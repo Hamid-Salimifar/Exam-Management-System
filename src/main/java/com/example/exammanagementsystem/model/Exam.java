@@ -28,11 +28,12 @@ public class Exam {
 
     private Integer durationMinutes;
 
-    @ManyToOne
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "teacher_id")
     private User teacher;
 
