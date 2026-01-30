@@ -28,7 +28,7 @@ public class ExamQuestion {
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     private Question question;
 
