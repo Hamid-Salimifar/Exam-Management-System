@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Question Bank</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Question Text</th>
+        <th>Type</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="q : ${QuestionBank}">
+        <td th:text="${q.title}"></td>
+        <td th:text="${q.questionText}"></td>
+        <td th:text="${q.questionType}"></td>
+        <td>
+            <a th:href="@{/teacher/question/edit/{id}(id=${q.id})}">
+                <button>Edit</button>
+            </a>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(QuestionBank)}">
+        <td colspan="4">No questions found for this course.</td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

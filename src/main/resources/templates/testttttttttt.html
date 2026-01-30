@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 th:text="'Set Scores for Exam: ' + ${exam.title}"></h2>
+
+<div th:each="e : ${examQuestions}">
+    <form th:action="@{/teacher/exam-question/update-score}" method="post">
+
+        <input type="hidden" name="examQuestionId" th:value="${e.id}">
+        <input type="hidden" name="examId" th:value="${exam.id}">
+
+        <p>
+            <strong th:text="${e.question.title}"></strong><br>
+            <span th:text="${e.question.questionText}"></span>
+        </p>
+
+        <input type="number"
+               name="score"
+               min="0"
+               th:value="${e.score}">
+
+        <button type="submit">Save Score</button>
+    </form>
+    <hr>
+    <h3>
+        Total Score:
+        <span th:text="${totalScore}"></span>
+    </h3>
+</div>
+</body>
+</html>

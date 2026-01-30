@@ -2,20 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>exam course teacher</title>
-    <link rel="stylesheet" th:href="@{/css/exam-course-teacher.css}">
+    <title>Student Exam</title>
 </head>
 <body>
-
-<h2>Exams for This Course</h2>
-
-
-<p>
-    <a th:href="@{/teacher/course/add/exam/{id}(id=${courseId})}">
-        Add New Exam
-    </a>
-</p>
-
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
     <tr>
@@ -25,41 +14,27 @@
         <th>End Time</th>
         <th>Duration (minutes)</th>
         <th>Action</th>
-        <th>Student Results</th>
     </tr>
     </thead>
 
     <tbody>
-    <tr th:each="exam : ${allExam}">
+    <tr th:each="exam : ${exams}">
         <td th:text="${exam.title}"></td>
         <td th:text="${exam.description}"></td>
         <td th:text="${#temporals.format(exam.startTime, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${#temporals.format(exam.endTime, 'yyyy-MM-dd HH:mm')}"></td>
         <td th:text="${exam.durationMinutes}"></td>
         <td>
-            <a th:href="@{/teacher/course/exam/edit/{id}(id=${exam.id})}">
-                Edit
-            </a>
-        </td>
-        <td>
-            <a th:href="@{/teacher/course/exam/results/{id}(id=${exam.id})}">
-                See
+            <a th:href="@{/student/exam/{examId}(examId=${exam.id})}">
+                Take Exam
             </a>
         </td>
     </tr>
 
-    <tr th:if="${#lists.isEmpty(allExam)}">
+    <tr th:if="${#lists.isEmpty(exams)}">
         <td colspan="6">No exams found for this course.</td>
     </tr>
     </tbody>
 </table>
-
-<p>
-    <a th:href="@{/teacher/course/questionsBank/{courseId}(courseId=${courseId})}">
-        🏦Question Bank
-    </a>
-</p>
-<a th:href="@{/home}">Back to Dashboard</a>
-
 </body>
 </html>

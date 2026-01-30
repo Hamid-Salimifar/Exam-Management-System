@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="font-weight: bold; color: red;">
+    Time remaining: <span id="timer"></span>
+</div>
+<h2 th:text="${exam.title}">Exam Title</h2>
+
+<hr>
+
+<!-- Question text -->
+<h3 th:text="${examQuestion.question.title}"></h3>
+<p th:text="${examQuestion.question.questionText}"></p>
+
+<hr>
+
+<form th:action="@{/student/exam/{examId}/question/{index}(examId=${exam.id}, index=${index})}" method="post">
+
+    <input type="hidden" name="examQuestionId" th:value="${examQuestion.id}" />
+    <input type="hidden" name="examAttemptId" th:value="${examAttempt.id}" />
+
+    <!-- DESCRIPTIVE -->
+    <div th:if="${examQuestion.question.questionType.name() == 'DESCRIPTIVE'}">
+    <textarea name="descriptiveAnswerText"
+              rows="5"
+              cols="70"
+              placeholder="Write your answer here..."
+              th:text="${studentAnswer != null ? studentAnswer.answerText : ''}">
+    </textarea>
+    </div>
+
+    <!-- MCQ -->
+    <div th:if="${examQuestion.question.questionType.name() == 'MCQ'}"
+         th:with="mcqQuestion=${examQuestion.question}">
+
+        <div th:each="opt : ${mcqQuestion.options}">
+            <label>
+                <input type="radio" name="mcqAnswer" th:value="${opt.id}"
+                       th:checked="${studentAnswer != null and studentAnswer.selectedOption.id == opt.id}">
+                <span th:text="${opt.text}"></span>
+            </label>
+            <br>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- NAVIGATION -->
+    <div>
+        <!-- Previous -->
+        <a th:if="${index > 0}" th:href="@{/student/exam/{examId}/question/{prev}(examId=${exam.id}, prev=${index - 1})}">
+            Previous
+        </a>
+
+        <!-- Next / Finish -->
+        <button type="submit" th:text="${index + 1 == allExamQuestions.size() ? 'Finish Exam' : 'Next'}">
+            Next
+        </button>
+    </div>
+
+</form>
+
+
+
+
+
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let remainingSeconds = /*[[${remainingSeconds}]]*/ 0;
+
+    function tick() {
+        if (remainingSeconds <= 0) {
+            window.location.href = "/student/courses";
+            return;
+        }
+
+        let minutes = Math.floor(remainingSeconds / 60);
+        let seconds = remainingSeconds % 60;
+
+        document.getElementById("timer").innerText =
+            minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+        remainingSeconds--;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+    /*]]>*/
+</script>
+
+</body>
+</html>

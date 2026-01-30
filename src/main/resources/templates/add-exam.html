@@ -12,37 +12,35 @@
       th:object="${exam}"
       method="post">
 
-    <!-- Title -->
+
     <p>
         <label>Title:</label><br>
         <input type="text" th:field="*{title}" required />
     </p>
 
-    <!-- Description -->
     <p>
         <label>Description:</label><br>
         <textarea th:field="*{description}" rows="4" cols="40"></textarea>
     </p>
 
-    <!-- Start Time -->
+
     <p>
         <label>Start Time:</label><br>
         <input type="datetime-local" th:field="*{startTime}" required />
     </p>
 
-    <!-- End Time -->
     <p>
         <label>End Time:</label><br>
         <input type="datetime-local" th:field="*{endTime}" required />
     </p>
 
-    <!-- Duration -->
+
     <p>
         <label>Duration (minutes):</label><br>
         <input type="number" th:field="*{durationMinutes}" min="1" required />
     </p>
 
-    <!-- IMPORTANT: pass courseId -->
+
     <input type="hidden" name="courseId" th:value="${courseId}" />
 
     <p>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/teacher/course/exams/question/add}" method="post">
+
+    <input type="hidden" name="examId" th:value="${examId}" />
+
+    <div th:each="question : ${questionsBank}">
+        <input type="checkbox"
+               name="questionIds"
+               th:value="${question.id}"
+               th:checked="${examQuestionIds.contains(question.id)}" />
+        <span th:text="${question.title + ' - ' + question.questionText}"></span>
+    </div>
+    <button type="submit">Add Question</button>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Questionn</title>
+    <script>
+        function addOptionField() {
+            const container = document.getElementById('mcq-options');
+            const index = container.children.length;
+            const div = document.createElement('div');
+
+            div.innerHTML = `
+                <input type="text" name="optionTexts" placeholder="Option text" required>
+                <input type="radio" name="correctOptionIndex" value="${index}" required> Correct
+            `;
+            container.appendChild(div);
+        }
+    </script>
+</head>
+<body>
+<h2>Create Descriptive Question</h2>
+<form th:action="@{/teacher/course/question/create/descriptive}" method="post">
+    <input type="hidden" name="courseId" th:value="${courseId}" />
+    <p>Title: <input type="text" name="title" required></p>
+    <p>Question Text:<br>
+        <textarea name="questionText" rows="4" cols="50" required></textarea>
+    </p>
+    <button type="submit">Add Descriptive Question</button>
+</form>
+
+<hr>
+
+<h2>Create MCQ Question</h2>
+<form th:action="@{/teacher/course/question/create/mcq}" method="post">
+    <input type="hidden" name="courseId" th:value="${courseId}" />
+    <p>Title: <input type="text" name="title" required></p>
+    <p>Question Text:<br>
+        <textarea name="questionText" rows="4" cols="50" required></textarea>
+    </p>
+    <div id="mcq-options">
+        <div>
+            <input type="text" name="optionTexts" placeholder="Option text" required>
+            <input type="radio" name="correctOptionIndex" value="0" required> Correct
+        </div>
+    </div>
+    <p>
+        <button type="button" onclick="addOptionField()">Add Another Option</button>
+    </p>
+    <button type="submit">Add MCQ Question</button>
+</form>
+</body>
+</html>

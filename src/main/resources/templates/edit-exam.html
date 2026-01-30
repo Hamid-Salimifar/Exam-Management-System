@@ -9,24 +9,24 @@
 
 <h2>Edit Exam</h2>
 
-<!-- ================= UPDATE FORM ================= -->
+
 <form th:action="@{/teacher/course/exam/edit/{id}(id=${exam.id})}"
       th:object="${exam}"
       method="post">
 
-    <!-- Title -->
+
     <p>
         <label>Title:</label><br>
         <input type="text" th:field="*{title}" required />
     </p>
 
-    <!-- Description -->
+
     <p>
         <label>Description:</label><br>
         <textarea th:field="*{description}" rows="4" cols="40"></textarea>
     </p>
 
-    <!-- Start Time -->
+
     <p>
         <label>Start Time:</label><br>
         <input type="datetime-local"
@@ -35,7 +35,7 @@
                required />
     </p>
 
-    <!-- End Time -->
+
     <p>
         <label>End Time:</label><br>
         <input type="datetime-local"
@@ -44,13 +44,13 @@
                required />
     </p>
 
-    <!-- Duration -->
+
     <p>
         <label>Duration (minutes):</label><br>
         <input type="number" th:field="*{durationMinutes}" min="1" required />
     </p>
 
-    <!-- ===== Hidden fields (VERY IMPORTANT) ===== -->
+
     <input type="hidden" th:field="*{id}" />
     <input type="hidden" th:field="*{course.id}" />
     <input type="hidden" th:field="*{teacher.id}" />
@@ -61,8 +61,28 @@
 </form>
 
 <hr>
+<p>
+    <a th:href="@{/teacher/course/exams/question/{examId}(examId=${exam.id})}">
+        Add Questions
+    </a>
+</p>
 
-<!-- ================= DELETE FORM ================= -->
+<p>
+    <a th:href="@{/teacher/course/exam/{examId}/set-scores(examId=${exam.id})}">
+        see All Question and their score
+    </a>
+</p>
+
+<p>
+    <a th:href="@{/teacher/course/questions/{courseId}(courseId=${exam.course.id})}">
+        Create New Questions
+    </a>
+</p>
+
+
+
+
+
 <form th:action="@{/teacher/course/exam/delete/{id}(id=${exam.id})}"
       method="post"
       onsubmit="return confirm('Are you sure you want to delete this exam?');">
@@ -72,7 +92,7 @@
 
 <hr>
 
-<!-- Back link -->
+
 <p>
     <a th:href="@{/teacher/course/exams/{id}(id=${exam.course.id})}">
         Back to Exam List

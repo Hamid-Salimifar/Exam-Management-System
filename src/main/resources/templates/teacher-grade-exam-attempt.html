@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grade Exam Attempt</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .box {
+            border: 1px solid #ccc;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        .mcq {
+            background-color: #f9f9f9;
+        }
+        .desc {
+            background-color: #ffffff;
+        }
+        .score {
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Grade Exam</h2>
+
+<p>
+    <strong>Student:</strong>
+    <span th:text="${examAttempt.student.username}"></span>
+</p>
+
+<p>
+    <strong>Status:</strong>
+    <span th:text="${examAttempt.status}"></span>
+</p>
+
+<hr>
+
+<h3>MCQ Questions (Auto graded)</h3>
+
+<div th:each="answer : ${mcqAnswers}" class="box mcq">
+
+    <p>
+        <strong th:text="${answer.examQuestion.question.title}"></strong>
+    </p>
+
+    <p>
+        Student Answer:
+        <span th:text="${answer.selectedOption.text}"></span>
+    </p>
+
+    <p>
+        Correct:
+        <span th:text="${answer.selectedOption.correct ? 'Yes' : 'No'}"></span>
+    </p>
+
+    <p>
+        Score:
+        <strong th:text="${answer.score}"></strong>
+        /
+        <span th:text="${answer.examQuestion.score}"></span>
+    </p>
+
+</div>
+
+<hr>
+
+<h3>Descriptive Questions</h3>
+
+<!--<form th:action="@{/teacher/exam/attempt/{id}/grade(id=${examAttempt.id})}"-->
+<!--      method="post">-->
+
+<!--    <div th:each="answer : ${descriptiveAnswers}" class="box desc">-->
+
+<!--        <p>-->
+<!--            <strong th:text="${answer.examQuestion.question.title}"></strong>-->
+<!--        </p>-->
+
+<!--        <p><strong>Student Answer:</strong></p>-->
+
+<!--        <pre th:text="${answer.answerText != null ? answer.answerText : 'No answer submitted'}"></pre>-->
+
+<!--        <div class="score">-->
+<!--            <label>-->
+<!--                Score:-->
+<!--                <input type="number"-->
+<!--                       name="scores"-->
+<!--                       min="0"-->
+<!--                       th:max="${answer.examQuestion.score}"-->
+<!--                       th:value="${answer.score != null ? answer.score : 0}">-->
+<!--                /-->
+<!--                <span th:text="${answer.examQuestion.score}"></span>-->
+<!--            </label>-->
+<!--        </div>-->
+
+<!--        <input type="hidden" name="answerIds" th:value="${answer.id}">-->
+<!--    </div>-->
+
+<!--    <button type="submit">Save Scores</button>-->
+<!--</form>-->
+
+
+
+
+
+
+
+
+
+<div th:each="answer : ${descriptiveAnswers}">
+    <form th:action="@{/teacher/exam/attempt/{id}/grade(id=${examAttempt.id})}" method="post">
+
+        <p>
+            <strong th:text="${answer.examQuestion.question.title}"></strong>
+        </p>
+        <p><strong>Student Answer:</strong></p>
+        <pre th:text="${answer.answerText != null ? answer.answerText : 'No answer submitted'}"></pre>
+
+        <div class="score">
+            <label>
+                Score:
+                <input type="number"
+                       name="score"
+                       min="0"
+                       th:max="${answer.examQuestion.score}"
+                       th:value="${answer.score != null ? answer.score : 0}">
+                /
+                <span th:text="${answer.examQuestion.score}"></span>
+            </label>
+        </div>
+        <input type="hidden" name="answerIds" th:value="${answer.id}">
+        <button type="submit">Save Scores</button>
+    </form>
+
+</div>
+
+</body>
+</html>

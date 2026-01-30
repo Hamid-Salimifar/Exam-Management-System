@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>student exam attempt</title>
+</head>
+<body>
+
+<h2>Exam in Progress</h2>
+
+<!-- Timer (static for now) -->
+<p>
+    Duration:
+    <span th:text="${duration}"></span> minutes
+</p>
+
+<hr>
+
+<!-- Question -->
+<h3 th:text="${question.question.title}"></h3>
+<p th:text="${question.question.questionText}"></p>
+
+<hr>
+
+<!-- Answer area -->
+<div th:if="${question.question.questionType.name() == 'DESCRIPTIVE'}">
+    <textarea rows="5" cols="60"></textarea>
+</div>
+
+<div th:if="${question.question.questionType.name() == 'MCQ'}"
+     th:with="mcqQuestion=${question.question}">
+
+    <div th:each="opt : ${mcqQuestion.options}">
+        <label>
+            <input type="radio" name="answer" th:value="${opt.id}">
+            <span th:text="${opt.text}"></span>
+        </label>
+        <br>
+    </div>
+
+</div>
+
+<hr>
+
+<!-- Navigation -->
+<form method="post">
+    <button type="submit">Next</button>
+</form>
+
+
+</body>
+</html>

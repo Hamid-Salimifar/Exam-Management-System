@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Results</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Exam Results</h2>
+
+<p>
+    <strong>Exam:</strong>
+    <span th:text="${exam.title}"></span>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Student</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Score</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="attempt : ${allExamAttempts}">
+
+        <td th:text="${attempt.student.username}"></td>
+
+        <td th:text="${attempt.startTime}"></td>
+
+        <td th:text="${attempt.endTime}"></td>
+
+        <td th:text="${attempt.status}"></td>
+
+        <td>
+            <span th:if="${attempt.totalScore != null}"
+                  th:text="${attempt.totalScore}"></span>
+            <span th:if="${attempt.totalScore == null}">
+                Not graded
+            </span>
+        </td>
+
+        <td>
+            <a th:href="@{/teacher/exam/attempt/{attemptId}(attemptId=${attempt.id})}">
+                View &amp; Grade
+            </a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

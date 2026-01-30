@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/teacher/question/edit/{id}(id=${question.id})}" method="post">
+    <p>Title:</p>
+    <input type="text" th:field="${question.title}" name="title" required />
+
+    <p>Question Text:</p>
+    <textarea th:field="${question.questionText}" name="questionText" rows="5" cols="50" required></textarea>
+
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>
