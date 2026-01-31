@@ -31,6 +31,11 @@ public class CourseServiceImpl extends BaseServiceImpl<Course> implements Course
     }
 
     @Override
+    public List<Course> findByStudent(User student) {
+        return courseRepository.findByStudent(student);
+    }
+
+    @Override
     public List<Course> findByTeacher(User teacher) {
         return courseRepository.findByTeacher(teacher);
     }

@@ -13,6 +13,8 @@ public interface CourseService extends BaseService<Course> {
     Course updateCourse(Long courseId, String uniqueCode, LocalDate startDate, LocalDate endDate, Long teacherId, List<Long> studentIds);
 
     List<Course> findByTeacher(User teacher);
+
+    List<Course> findByStudent(User student);
 }
 
 
