@@ -17,6 +17,12 @@ public class ExamServiceImpl extends BaseServiceImpl<Exam> implements ExamServic
         this.examRepository=examRepository;
     }
 
+
+    @Override
+    public List<Exam> findByCourse_Id(Long courseId) {
+        return examRepository.findByCourse_Id(courseId);
+    }
+
     @Override
     public List<Exam> findByTeacher_Id(Long teacherId) {
         return examRepository.findByTeacher_Id(teacherId);
@@ -24,6 +30,7 @@ public class ExamServiceImpl extends BaseServiceImpl<Exam> implements ExamServic
 
     @Override
     public List<Exam> findByCourse_IdAndTeacher_Id(Long courseId, Long teacherId) {
+        //todo:add...
        return examRepository.findByCourse_IdAndTeacher_Id(courseId,teacherId);
     }
 

@@ -11,4 +11,6 @@ public interface ExamService extends BaseService<Exam>{
     List<Exam> findByCourse_IdAndTeacher_Id(Long courseId, Long teacherId);
 
     Exam updateExam(Long id, Exam updatedExam);
+
+    List<Exam> findByCourse_Id(Long courseId);
 }
